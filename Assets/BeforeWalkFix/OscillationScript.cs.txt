@@ -1,0 +1,20 @@
+using UnityEngine;
+
+public class OscillationScript : MonoBehaviour
+{
+    public float Max = 20f;
+    public float Stp = 0.2f;   // Negative on the opposite limbs
+    public float Ang = 0f;     // Set to a different start angle for an offset
+
+    void Update()
+    {
+        // Flip direction only when moving outward past the limit
+        if ((Ang >= Max && Stp > 0) || (Ang <= -Max && Stp < 0))
+        {
+            Stp = -Stp;
+        }
+
+        transform.Rotate(Stp, 0, 0);
+        Ang += Stp;
+    }
+}
