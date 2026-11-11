@@ -7,6 +7,7 @@ public class RoboController : MonoBehaviour
     public float TurnSpeed = 60f;   // Turning speed in degrees per second
     public bool Manual = false;     // False: walks by itself. True: the arrow keys drive it.
     public bool IsWalking = false;  // The limbs read this to know when to swing
+    public float AutoTurn = 0f;     // Automatic mode only: degrees per second to turn while walking. 0 walks straight.
 
     void Update()
     {
@@ -35,8 +36,10 @@ public class RoboController : MonoBehaviour
         }
         else
         {
-            // Automatic mode: always walk forward.
+            // Automatic mode: always walk forward, turning a little each frame.
+            // Walking and turning together makes the robot walk in a big circle.
             transform.Translate(0, 0, Speed * Time.deltaTime);
+            transform.Rotate(0, AutoTurn * Time.deltaTime, 0);
             IsWalking = true;
         }
     }
