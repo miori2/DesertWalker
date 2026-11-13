@@ -58,10 +58,22 @@ public static class Part3Setup
         cam.transform.position = new Vector3(0f, 9f, -6f);
         cam.transform.rotation = Quaternion.Euler(12.5f, 0f, 0f);
         cam.farClipPlane = 2000f;
+        cam.gameObject.AddComponent<PoseHotkeys>();
 
         AssetDatabase.SaveAssets();
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         Debug.Log("Part 3 scene built. Press Play.");
+    }
+
+    // Adds the finger and arm hotkeys to a Part3 scene that's already built.
+    [MenuItem("Tools/Add Part 3 Hotkeys")]
+    static void AddHotkeys()
+    {
+        Camera cam = Camera.main;
+        if (cam.GetComponent<PoseHotkeys>() == null)
+            Undo.AddComponent<PoseHotkeys>(cam.gameObject);
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+        Debug.Log("Hotkeys added to Main Camera: F, B, N for fingers and U, D for arms.");
     }
 
     static void Robot(string name, Vector3 position, float bodyWidth,
